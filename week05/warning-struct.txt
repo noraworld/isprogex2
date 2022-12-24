@@ -1,0 +1,4 @@
+struct data {
+       char key;
+       struct data *next;
+}; ←このセミコロンを忘れるだけで意味の分からないエラーがたくさん出るので注意！

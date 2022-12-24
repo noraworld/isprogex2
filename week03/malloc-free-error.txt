@@ -1,0 +1,9 @@
+incompatible implicit declaration of built-in function ‘malloc’
+incompatible implicit declaration of built-in function ‘free’
+
+この警告は
+#include<stdlib.h>
+を書いていないときに表示される
+
+実行ファイルは作成される（コンパイルエラーではない）が
+正しい動作をするかどうかは不明。

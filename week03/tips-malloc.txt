@@ -1,0 +1,39 @@
+typedef struct {
+	char code[ELE];
+	char name[ELE];
+	int price;
+} gift;
+というgift型構造体を定義する
+
+【ケース１】
+int main() {
+
+    gift *gifts;
+
+    gifts = (gift *)malloc(sizeof(gift) * 4);
+    // これはgift型を４つ用意している
+
+}
+
+確保している領域
+code[0] name[0] price[0]
+code[1] name[1] price[1]
+code[2] name[2] price[2]
+code[3] name[3] price[3]
+
+
+【ケース２】
+int main() {
+
+    gift *gifts[100];
+
+    i = 0
+    gifts[i] = (gift *)malloc(sizeof(gift));
+    // これはgift型を１つ用意している
+
+    for (i = 0; i < 4; i++)
+    	gifts[i] = (gift *)malloc(sizeof(gift));
+	// これはgift型を４つ用意している
+
+}
+

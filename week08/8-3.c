@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+// 構造体定義
+struct data {
+  char key;
+  struct data *next;
+};
+
+struct queue {
+  struct data *top, *rear;
+};
+
+// プロトタイプ宣言
+void enqueue(struct queue *q, char key);
+void print_queue_list(struct queue q);
+
+int main() {
+
+  struct queue q;
+
+  q.top = NULL;
+
+  // エンキューする度にキューの中身を確認する
+  enqueue(&q, 'a');
+  print_queue_list(q);
+  enqueue(&q, 'b');
+  print_queue_list(q);
+  enqueue(&q, 'c');
+  print_queue_list(q);
+
+  // メモリを開放する
+  while (q.top != NULL) {
+    free(q.top);
+    q.top = q.top->next;
+  }
+
+  return 0;
+}
+
+// エンキューする
+void enqueue(struct queue *q, char key) {
+
+  if (q->top == NULL) {
+    q->top = (struct data *)malloc(sizeof(struct data));
+    if (q->top == NULL) {
+      printf("メモリを確保できません.\n");
+      return;
+    }
+    q->top->key = key;
+    q->top->next = NULL;
+    q->rear = q->top;
+    return;
+  }
+
+  q->rear->next = (struct data *)malloc(sizeof(struct data));
+  if (q->rear->next == NULL) {
+    printf("メモリを確保できません.\n");
+    return;
+  }
+  q->rear = q->rear->next;
+  q->rear->key = key;
+  q->rear->next = NULL;
+
+  return;
+}
+
+// リストをループでたどって画面に出力する
+void print_queue_list(struct queue q) {
+
+  int det = 0;
+
+  // リスト内が空のときの例外処理
+  if (q.top == NULL) {
+    printf("キューが空です.\n\n");
+    return;
+  }
+  // リスト内のデータが1つのときの例外処理
+  if (q.top == q.rear) {
+    printf("%c<---TOP, REAR\n", q.top->key);
+    printf("データが1つしかありません.\n\n");
+    return;
+  }
+  // 通常処理
+  while (q.top != q.rear) { // リストの末尾の手前まで出力
+    if (det == 0)
+      printf("%c<---TOP\n", q.top->key);
+    else
+      printf("%c\n", q.top->key);
+    det++;
+    q.top = q.top->next;
+  }
+  printf("%c<---REAR\n", q.rear->key); // リストの末尾(rear)を出力
+  putchar('\n');
+
+  return;
+}
